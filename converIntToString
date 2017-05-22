@@ -1,0 +1,23 @@
+#include <iostream>
+#include <string>
+#include <sstream>
+#include <algorithm>
+
+using namespace std;
+
+int main() {
+	// your code goes here
+	int num=5;
+//std::string s = std::to_string(num);
+//int number = 1234;
+
+    std::ostringstream ostr; //output string stream
+    ostr << num; //use the string stream just like cout,
+    //except the stream prints not to stdout but to a string.
+
+    std::string theNumberString = ostr.str();
+
+
+	cout<<theNumberString;
+	return 0;
+}
