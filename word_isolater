@@ -2,6 +2,7 @@ std::vector<string> arr(string &s){
     string temp="";
     vector <string> V;
     s=s+' ';
+//just to inialise comparing
     int count=0;
     for(int i=0;i<s.length();i++){
         if(s.at(i)==' '){   
