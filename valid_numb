@@ -1,0 +1,112 @@
+#include <iostream>
+#include <vector>
+#include <string>
+using namespace std;
+bool checkseq(string &s){
+    if(s==""){return 1;}
+  else  if(s==".e-"){return 1;}
+  else  if(s==".e"){return 1;}
+   else if(s=="e"){return 1;}
+   else if(s=="."){return 1;}
+    else {return 0;}
+}
+
+bool checknumb(string &s1){
+    for(int i=0;i<s1.length();i++){
+        switch(s1.at(i)){
+        case '0': break;
+        case '1': break;
+        case '2': break;
+        case '3': break;
+        case '4': break;
+        case '5': break;
+        case '6': break;
+        case '7': break;
+        case '8': break;
+        case '9': break;
+        
+        default :return 0;
+        }
+    }
+    return 1;
+}
+
+bool validNumb(string s){
+    vector <string> A;
+    string temp="";
+    cout<<"program begins"<<endl;
+   while(s.at(0)=' '){
+       
+  s.erase (0,1);
+   }
+   cout<<"s is"<<s<<endl;
+   if(s.length()==0){return 0;}
+    
+    if(s.at(0)=='-'){}
+    else {
+        s="-"+s;
+    }
+///proper string converted!
+cout<<"in standard way = "<<s<<endl;
+
+string sign="";
+
+for(int i=1;i<s.length();i++){
+    if(s.at(i)=='.'&&s.at(i-1)!='-'){
+        sign+=".";
+        cout<<"decibal detected"<<endl;
+        A.push_back(temp);
+        temp="";
+    }
+    else if(s.at(i)=='e'){
+        sign+="e";
+        
+        cout<<"exp detected"<<endl;
+        A.push_back(temp);
+        temp="";
+    }
+    else if(s.at(i)=='-'){
+        sign+="-";
+        cout<<"sign detected"<<endl;
+        A.push_back(temp);
+        temp="";
+    }
+    else if(s.at(i)=='.'&&s.at(i-1)=='-'){
+        sign+=".";
+        cout<<"excepetence case detected"<<endl;
+        temp="0";
+        A.push_back(temp);
+        temp="";
+    }
+    else if(i==(s.length()-1)){
+        temp+=s.at(i);
+        A.push_back(temp);
+        cout<<"p"<<temp<<"p temp at end"<<endl;
+        temp="";
+        cout<<"at the end"<<temp<<endl;
+    }
+    else {
+        cout<<"char will be added temp is = "<<temp<<endl;
+        temp+=s.at(i);
+    }
+}
+cout<<A.size()<<endl;
+for(int i=0;i<A.size();i++){
+    if(checknumb(A[i])){}
+    else return 0;   
+    
+}
+
+if(checkseq(sign)){}
+else return 0;
+return 1;
+
+}
+
+int main() {
+	// your code goes here
+	string s=" 1.5";
+	cout<<checknumb(s)<<"num check"<<endl;;
+	cout<<validNumb(s);
+	return 0;
+}
