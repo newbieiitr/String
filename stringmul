@@ -1,0 +1,140 @@
+
+#include <iostream>
+#include <string>
+#include <sstream>
+#include <algorithm>
+using namespace std;
+void paddrev(string &s1,string &s2){
+    reverse(s1.begin(),s1.end());
+    reverse(s2.begin(),s2.end());
+    while(s1.length()>s2.length()){
+        
+        s2+='0';
+    }
+    while(s2.length()>s1.length()){
+        
+        s1+='0';
+    }
+    
+    
+}
+
+
+
+string binadd(string &s1,string &s2){
+    
+    paddrev(s1,s2);
+    
+    int size = s1.length();
+
+
+string carry="0";
+ string s="";
+for(int i=0;i<size;i++){
+       string temp;
+          string cond="";
+     cond+=s1.at(i);
+        cond+= s2.at(i);
+        cond+= carry;
+        
+    if(cond=="000")    {
+                     temp="0";
+                    carry="0";
+    }
+    else if(cond=="001"||cond=="010"||cond=="100"){
+                    temp="1";
+                    carry="0";
+    }
+    
+    else if(cond=="111"){
+                temp="1";
+                    carry="1";
+    }
+    
+    else { temp="0";
+                    carry="1";
+        
+    }
+       
+    
+   s=s+temp;
+    
+}
+if(carry=="1") s+="1";
+ reverse(s.begin(),s.end());
+ 
+ return s;
+
+
+
+}
+string mulchar(string s,char x){
+	//null condition
+	if(s.length()==0) return "0";
+	reverse(s.begin(),s.end());
+	s+='0';
+	string s1="";
+	int carry=0;
+	
+	for(int i=0;i<s.length();i++){
+		// char  converted to numb temp
+	
+int temp = s.at(i) - '0';
+int temp2 = x - '0';
+
+//std::string s = std::to_string(num);
+//int number = 1234;
+
+   
+
+
+		
+		temp=temp*temp2+carry;
+		temp2=temp%10;
+		carry=temp/10;
+		
+		 std::ostringstream ostr; //output string stream
+    ostr << temp2; //use the string stream just like cout,
+    //except the stream prints not to stdout but to a string.
+
+    std::string theNumberString = ostr.str();
+    
+    s1+=theNumberString;
+		
+		
+	}
+	while(s1.at(s1.length()-1)=='0') s1.erase (s1.begin()+s1.length()-1);
+	if(s1.length()==0) return "0";
+	
+	reverse(s1.begin(),s1.end()); 
+	
+	return s1;
+	
+	
+}
+
+
+string multi(string A, string B) {
+	
+	string s1="0";
+	// null condition
+	
+	for(int i=0;i<A.length();i++){
+		string s2=mulchar(B,A.at(A.length()-1-i));
+	//	s1+=s2;
+	s1=binadd(s1,s2);
+		
+	}
+	return s1;
+	
+}
+
+
+
+
+
+
+int main() {
+	// your code goes here
+	return 0;
+}
