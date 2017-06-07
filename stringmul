@@ -1,9 +1,16 @@
-
 #include <iostream>
 #include <string>
 #include <sstream>
 #include <algorithm>
 using namespace std;
+
+string pre(int i){
+    string s="";
+    for(int j=0;j<i;j++) s+="0";
+    
+    return s;
+}
+
 void paddrev(string &s1,string &s2){
     reverse(s1.begin(),s1.end());
     reverse(s2.begin(),s2.end());
@@ -15,59 +22,52 @@ void paddrev(string &s1,string &s2){
         
         s1+='0';
     }
+      s2+='0';
+     s1+='0';
     
+  
+    
+}
+
+
+
+string add(string &s1,string &s2){
+     paddrev(s1,s2);
+     int carry=0;
+     
+     string s="";
+     for(int i=0;i<s1.length();i++){
+         	
+int temp = s1.at(i) - '0';
+int temp2 = s2.at(i) - '0';
+
+temp=temp+temp2+carry;
+temp2=temp%10;
+carry=temp/10;
+
+std::ostringstream ostr; //output string stream
+    ostr << temp2; //use the string stream just like cout,
+    //except the stream prints not to stdout but to a string.
+
+    std::string theNumberString = ostr.str();
+    
+    s+=theNumberString;
+
+
+     }
+     
+     	while(s.at(s.length()-1)=='0') { 
+    	    s.erase (s.begin()+s.length()-1);
+    	    if(s.length()==0){
+        return "0"; }
+    }
+    
+   reverse(s.begin(),s.end());
+     
+     return s;
     
 }
 
-
-
-string binadd(string &s1,string &s2){
-    
-    paddrev(s1,s2);
-    
-    int size = s1.length();
-
-
-string carry="0";
- string s="";
-for(int i=0;i<size;i++){
-       string temp;
-          string cond="";
-     cond+=s1.at(i);
-        cond+= s2.at(i);
-        cond+= carry;
-        
-    if(cond=="000")    {
-                     temp="0";
-                    carry="0";
-    }
-    else if(cond=="001"||cond=="010"||cond=="100"){
-                    temp="1";
-                    carry="0";
-    }
-    
-    else if(cond=="111"){
-                temp="1";
-                    carry="1";
-    }
-    
-    else { temp="0";
-                    carry="1";
-        
-    }
-       
-    
-   s=s+temp;
-    
-}
-if(carry=="1") s+="1";
- reverse(s.begin(),s.end());
- 
- return s;
-
-
-
-}
 string mulchar(string s,char x){
 	//null condition
 	if(s.length()==0) return "0";
@@ -103,8 +103,13 @@ int temp2 = x - '0';
 		
 		
 	}
-	while(s1.at(s1.length()-1)=='0') s1.erase (s1.begin()+s1.length()-1);
-	if(s1.length()==0) return "0";
+	
+	while(s1.at(s1.length()-1)=='0') { 
+	    s1.erase (s1.begin()+s1.length()-1);
+	    	if(s1.length()==0) return "0";
+	    }
+
+
 	
 	reverse(s1.begin(),s1.end()); 
 	
@@ -112,6 +117,7 @@ int temp2 = x - '0';
 	
 	
 }
+
 
 
 string multi(string A, string B) {
@@ -122,7 +128,10 @@ string multi(string A, string B) {
 	for(int i=0;i<A.length();i++){
 		string s2=mulchar(B,A.at(A.length()-1-i));
 	//	s1+=s2;
-	s1=binadd(s1,s2);
+//	cout<<"ab pre ki bari"<<i<<endl;
+	s2=s2+pre(i);
+//	cout<<"s2 is"<<s2<<"and s1 = "<<s1<<endl;
+	s1=add(s1,s2);
 		
 	}
 	return s1;
@@ -134,7 +143,36 @@ string multi(string A, string B) {
 
 
 
-int main() {
-	// your code goes here
-	return 0;
+
+
+
+string Solution::multiply(string A, string B) {
+    
+    if(A.length()==0||B.length()==0){
+        return "0";
+    }
+    
+    	while(B.at(B.length()-1)==' ') { 
+    	    B.erase (B.begin()+B.length()-1);
+    	    if(B.length()==0){
+        return "0"; }
+    }
+    	    
+    	while(B.at(0)==' ') {  
+    	    B.erase (B.begin()); 
+    	    if(B.length()==0){
+        return "0";}
+    	}
+    		while(A.at(A.length()-1)==' ') {   A.erase (A.begin()+A.length()-1);
+    		 if(A.length()==0){
+        return "0";}
+    		}
+    	while(A.at(0)==' ') {   A.erase (A.begin());
+    	
+    	     if(A.length()==0){
+        return "0";}
+    	}
+    
+    return multi(A,B);
+ 
 }
