@@ -1,0 +1,16 @@
+#include <iostream>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <iostream>
+#include <string>
+using namespace std;
+
+int main() {
+	// your code goes here
+	
+	string myString = "010";
+int i = strtoull (myString.c_str (),NULL,2);
+cout << i;
+	return 0;
+}
