@@ -1,4 +1,7 @@
 #include <iostream>
+#include <vector>
+#include <string>
+#include <unordered_map>
 using namespace std;
 
 void Add_per(vector <string> &sol,char c,int i,unordered_map<string, int> &hash) {
@@ -7,19 +10,23 @@ void Add_per(vector <string> &sol,char c,int i,unordered_map<string, int> &hash)
         string s1="";
         for(int k=0;k<sol[i].length();k++){
             if(k==j){
-                s1+=sol.[i].at(k);
+                s1+=sol[i].at(k);
                 s1+=c;
                 
             }
             else {
-                s1+=sol.[i].at(k);
+                s1+=sol[i].at(k);
             }
         }
+          if (hash.find(s1) == hash.end()) {
         sol.push_back(s1);
+       // cout<<s1<<" added";
+              hash[s1]=1;
+          }
     }
 }
 
-vector<vector <string> > per (string &s){
+vector <string>  per (string &s){
     
     //initialisation
     vector <string> sol;
@@ -32,30 +39,43 @@ vector<vector <string> > per (string &s){
 int size=sol.size();
 char c=s.at(i);
 unordered_map<string, int> hash;
+//cout<<"size is"<<size<<endl;
         
-         for(int i=0;i<size;i++){
-             Add_per(sol,c,i,hash);
+         for(int j=0;j<size;j++){
+             Add_per(sol,c,j,hash);
              // add char every where except before string and push_back them to sol
          }
-         for(int i=0;i<size;i++){
-             string s1=c+sol[i];
+         for(int j=0;j<size;j++){
+          //   cout<<sol[j]<< j <<endl;
+             string s1=c+sol[j];
              if (hash.find(s1) == hash.end()) {
-                 sol[i]=s1;
+                 sol[j]=s1;
+                 //cout<<sol[i]<<" ";
                  hash[s1]=1;
              }
              else{
-                 sol.erase (sol.begin()+i);
+                 sol.erase (sol.begin()+j);
+                 j--;
+                 size--;
              }
              
          }
+        
          
          
         
     }
+    return sol;
     
 }
 
 int main() {
+    
+    string s="acc";
+     vector <string> sol=per(s);
+     for(int i=0;i<sol.size();i++) cout<<sol[i]<<"   ";
+     cout<<endl;
+     
 	// your code goes here
 	return 0;
 }
